@@ -164,6 +164,7 @@ var Controller = Events.extend({
         args.unshift(Component);
         var component = new (fun.bind.apply(null, args));
         component[COMPONENT_FLAG] = true;
+        component.controller = this;
         return component;
     },
 

@@ -1,6 +1,6 @@
 {
   "name": "blear.classes.controller",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "单页面控制器",
   "scripts": {
     "live": "browser-sync start --config bs-config.js"
