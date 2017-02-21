@@ -7,7 +7,6 @@
 'use strict';
 
 
-
 var random = require('blear.utils.random');
 var typeis = require('blear.utils.typeis');
 var object = require('blear.utils.object');
@@ -15,6 +14,7 @@ var array = require('blear.utils.array');
 var access = require('blear.utils.access');
 var plan = require('blear.utils.plan');
 var fun = require('blear.utils.function');
+var Class = require('blear.classes.class');
 var Events = require('blear.classes.events');
 
 var eventTransmit = new Events();
@@ -159,9 +159,14 @@ var Controller = Events.extend({
      * @returns {*}
      */
     component: function (Component/*...args*/) {
+        var ctrl = this;
         var args = access.args(arguments).slice(1);
         args.unshift(null);
-        args.unshift(Component);
+        var OverrideComponent = Class.ify(Component).extend(function () {
+            this.controller = ctrl;
+            Component.apply(this, arguments);
+        });
+        args.unshift(OverrideComponent);
         var component = new (fun.bind.apply(null, args));
         component[COMPONENT_FLAG] = true;
         return component;
