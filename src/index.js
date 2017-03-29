@@ -270,7 +270,7 @@ pro[_execute] = function (callbackList, next) {
         var hidePlan = plan.wait(1);
 
         array.each(callbackList, function (index, callback) {
-            if (callback.length === 3) {
+            if (callback.length === 2) {
                 hidePlan = hidePlan.task(function (next) {
                     callback.call(the, the.view, next);
                 });
