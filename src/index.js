@@ -47,11 +47,11 @@ var Controller = Events.extend({
      * @param title
      * @returns {Controller}
      */
-    setTitle: function (title) {
+    title: function (title) {
         var the = this;
 
         if (the.view) {
-            the.view.setTitle(title);
+            the.view.title(title);
         } else {
             the[_exports].title = title;
         }

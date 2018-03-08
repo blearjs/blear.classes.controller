@@ -139,29 +139,29 @@ describe('单元测试', function () {
         done();
     });
 
-    it('#setTitle 控制器导出初始化之前', function () {
+    it('#title 控制器导出初始化之前', function () {
         var ctrl = new Controller();
         var title = 'aaa';
 
-        ctrl.setTitle(title);
+        ctrl.title(title);
         var exports = ctrl.export();
 
         expect(exports.title).toBe(title);
     });
 
-    it('#setTitle 控制器导出初始化之后', function () {
+    it('#title 控制器导出初始化之后', function () {
         var ctrl = new Controller();
         var exports = ctrl.export();
         var title1 = 'aaa';
         var title2 = '';
         var view = {
-            setTitle: function (title) {
+            title: function (title) {
                 title2 = title;
             }
         };
         var route = {};
         exports.init(view, route);
-        ctrl.setTitle(title1);
+        ctrl.title(title1);
 
         expect(title2).toEqual(title1);
     });
