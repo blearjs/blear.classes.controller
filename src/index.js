@@ -17,6 +17,11 @@ var Controller = Events.extend({
     constructor: function () {
         var the = this;
 
+        Controller.parent(the);
+        the[_installCallbackList] = [];
+        the[_showCallbackList] = [];
+        the[_hideCallbackList] = [];
+        the[_updateCallbackList] = [];
         the[_exports] = {
             init: function (view, route) {
                 the.view = view;
@@ -96,6 +101,21 @@ var Controller = Events.extend({
      */
     export: function () {
         return this[_exports];
+    },
+
+    /**
+     * 销毁
+     */
+    destroy: function () {
+        var the = this;
+
+        the[_installCallbackList]
+            = the[_showCallbackList]
+            = the[_hideCallbackList]
+            = the[_updateCallbackList]
+            = the[_exports]
+            = null;
+        Controller.invoke('destroy', the);
     }
 });
 var prop = Controller.prototype;
