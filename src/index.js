@@ -10,7 +10,6 @@
 var Events = require('blear.classes.events');
 var fun = require('blear.utils.function');
 var array = require('blear.utils.array');
-var access = require('blear.utils.access');
 
 var win = window;
 var Controller = Events.extend({
@@ -33,7 +32,7 @@ var Controller = Events.extend({
             hide: function () {
                 the[_execCallback](_hideCallbackList, arguments);
             },
-            update: function () {
+            update: function (view, route) {
                 the[_execCallback](_updateCallbackList, arguments);
             }
         };
@@ -133,10 +132,13 @@ prop[_pushCallback] = function (name, callback) {
 
 prop[_execCallback] = function (name, args) {
     var the = this;
+    var view = args[0];
+    var route = args[1];
 
-    args = access.args(args);
+    the.view = view;
+    the.route = route;
     array.each(the[name], function (inde, callback) {
-        callback.apply(win, args);
+        callback.call(win, view, route);
     });
 
     return the;

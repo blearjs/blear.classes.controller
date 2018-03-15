@@ -154,4 +154,20 @@ describe('单元测试', function () {
 
         expect(exports.title).toBe(title);
     });
+
+    it('#title 控制器导出初始化之后', function () {
+        var ctrl = new Controller();
+        var title1 = 'aaa';
+        var exports = ctrl.export();
+        var title2 = '';
+
+        exports.install({
+            title: function (_) {
+                title2 = _;
+            }
+        }, {});
+
+        ctrl.title(title1);
+        expect(title2).toBe(title1);
+    });
 });
