@@ -138,8 +138,12 @@ prop[_execCallback] = function (name, args) {
 
     the.view = view;
     the.route = route;
-    // MVVM 会将根节点进行替换，需要重新查找
-    view.el = selector.query('#' + view.elId)[0];
+
+    if (view && view.elId) {
+        // MVVM 会将根节点进行替换，需要重新查找
+        view.el = selector.query('#' + view.elId)[0];
+    }
+
     array.each(the[name], function (inde, callback) {
         callback.call(win, view, route);
     });
