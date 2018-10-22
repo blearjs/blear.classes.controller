@@ -10,6 +10,7 @@
 var Events = require('blear.classes.events');
 var fun = require('blear.utils.function');
 var array = require('blear.utils.array');
+var selector = require('blear.core.selector');
 
 var win = window;
 var Controller = Events.extend({
@@ -137,6 +138,8 @@ prop[_execCallback] = function (name, args) {
 
     the.view = view;
     the.route = route;
+    // MVVM 会将根节点进行替换，需要重新查找
+    view.el = selector.query('#' + view.elId)[0];
     array.each(the[name], function (inde, callback) {
         callback.call(win, view, route);
     });
