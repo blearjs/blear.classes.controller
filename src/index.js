@@ -101,6 +101,14 @@ var Controller = Events.extend({
     },
 
     /**
+     * 同步
+     * @returns {Controller}
+     */
+    sync: function () {
+        return this[_sync]();
+    },
+
+    /**
      * 销毁
      */
     destroy: function () {
@@ -124,6 +132,19 @@ var _updateCallbackList = sole();
 var _pushCallback = sole();
 var _execCallback = sole();
 var _exports = sole();
+var _sync = sole();
+
+prop[_sync] = function () {
+    var the = this;
+    var view = the.view;
+
+    if (view && view.elId) {
+        // MVVM 会将根节点进行替换，需要重新查找
+        view.el = view.viewEl = selector.query('#' + view.elId)[0];
+    }
+
+    return the;
+};
 
 prop[_pushCallback] = function (name, callback) {
     var the = this;
@@ -138,13 +159,8 @@ prop[_execCallback] = function (name, args) {
 
     the.view = view;
     the.route = route;
-
     array.each(the[name], function (inde, callback) {
-        if (view && view.elId) {
-            // MVVM 会将根节点进行替换，需要重新查找
-            view.el = view.viewEl = selector.query('#' + view.elId)[0];
-        }
-
+        the[_sync]();
         callback.call(win, view, route);
     });
 
